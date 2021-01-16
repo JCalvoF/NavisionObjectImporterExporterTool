@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NavisionObjectImporterExporterTool.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BackupPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">c:\Temp\Export\</Value>
+    </Setting>
+    <Setting Name="WorkingPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">c:\Temp\temp\</Value>
+    </Setting>
+    <Setting Name="ConnectionFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">./Connections.xml</Value>
+    </Setting>
+    <Setting Name="AllowExecute" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

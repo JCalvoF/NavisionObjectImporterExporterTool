@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<connections>
+  <connection>
+    <name>NAV_PRODUCCION</name>
+    <server>192.168.1.70</server>
+    <database>DBCronus_PRODUCCION</database>
+    <username>navuser</username>
+    <password>navuser12@</password>
+    <ntauthentication>false</ntauthentication>    
+  </connection>
+  <connection>
+    <name>NAV_PRE_PRODUCCION_1</name>
+    <server>192.168.1.70</server>
+    <database>DBCronus_PRE_PRODUCCION_1</database>
+    <username>navuser</username>
+    <password>navuser12@</password>
+    <ntauthentication>false</ntauthentication>
+  </connection>
+  <connection>
+    <name>NAV_PRE_PRODUCCION_2</name>
+    <server>192.168.1.70</server>
+    <database>DBCronus_PRE_PRODUCCION_2</database>
+    <username>navuser</username>
+    <password>navuser12@</password>
+    <ntauthentication>false</ntauthentication>
+  </connection>
+  <connection>
+    <name>NAV_DESARROLLO</name>
+    <server>192.168.1.70</server>
+    <database>DB_Cronus_DESARROLLO</database>
+    <username>navuser</username>
+    <password>navuser12@</password>
+    <ntauthentication>false</ntauthentication>
+  </connection> 
+</connections>
+

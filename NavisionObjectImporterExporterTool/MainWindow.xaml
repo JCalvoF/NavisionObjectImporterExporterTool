@@ -1,0 +1,178 @@
+﻿<Window x:Class="NavisionObjectImporterExporterTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:NavisionObjectImporterExporterTool"
+        Title="{Binding BannerText}" 
+        Height="600"        
+        MinHeight="600" 
+        Width="800" 
+        MinWidth="800"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}" Icon="appicon.ico" ResizeMode="CanResizeWithGrip">
+    
+    <!-- Main Grid -->
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="7"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- configuration and options grid-->
+        <Grid Margin="0" Grid.Column="0" Width="Auto" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="0" 
+                   Content="Origen de objetos" 
+                   Margin="5,0" 
+                   HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   Grid.ColumnSpan="2" FontSize="18" FontWeight="Bold" BorderThickness="0,0,0,2" BorderBrush="Black" />
+            
+            <!-- objects source, type and id grid -->
+            <Grid Grid.Row="1" Margin="5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="0"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Content="Conexion" Margin="5" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" BorderThickness="0,0,1,0" BorderBrush="Black"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Margin="5,5,0,5" ItemsSource="{Binding ConnectionList}" DisplayMemberPath="FullName" SelectedItem="{Binding SelectedConnection}"/>
+                <Label Grid.Row="1" Content="Tipo" Margin="5" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" BorderThickness="0,0,1,0" BorderBrush="Black"/>
+                <ComboBox Grid.Row="1" Grid.Column="1"  Margin="5,5,0,5" ItemsSource="{Binding ObjectTypeList}" DisplayMemberPath="ObjectTypeName" SelectedItem="{Binding SelectedObjectTypeList}" />
+                <Label Grid.Row="2" Grid.RowSpan="2" Content="ID Objeto" Margin="5" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" ToolTip="Id numerico del objeto a tratar" BorderThickness="0,0,1,0" BorderBrush="Black" />
+                <ComboBox Grid.Row="2" Grid.Column="1"  Margin="5,5,0,5" ItemsSource="{Binding ObjectList}" DisplayMemberPath="IdName" SelectedItem="{Binding SelectedObjectList}" />
+                <TextBox Visibility="Hidden" Grid.Row="3" Grid.Column="1"  Margin="5,5,0,5" Text="{Binding ObjectID}"></TextBox>
+            </Grid>
+            
+          
+            <!-- destination connection list -->
+            <Label Grid.Row="2" 
+                   Content="Destino de importación" 
+                   Margin="5,0" 
+                   HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   Grid.ColumnSpan="2" FontSize="18" 
+                   FontWeight="Bold" 
+                   BorderThickness="0,0,0,2" 
+                   BorderBrush="Black" />
+
+            <StackPanel Grid.Row="3" Margin="10,5,10,5">
+                <ItemsControl   ItemsSource="{Binding DestinationConnectionList, Mode=TwoWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Connection.Name}" IsChecked="{Binding IsChecked}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>                
+            </StackPanel>
+            
+            <!-- options -->
+            <Label Grid.Row="4" Content="Opciones de exportacion e importación" 
+                   Margin="5,0" 
+                   HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   Grid.ColumnSpan="2" FontSize="18" 
+                   FontWeight="Bold" 
+                   BorderThickness="0,0,0,2" BorderBrush="Black" />
+            
+            <StackPanel Grid.Row="5" Margin="10,5,10,0">
+                <CheckBox Margin="0,0,0,3" Content="Añadir timestamp a backup" IsChecked="{Binding UseTimestamp}"></CheckBox>
+                <CheckBox Margin="0,0,0,3" Content="Hacer backup de destino antes de importar" IsChecked="{Binding DestinationBackup}"></CheckBox>
+                <CheckBox Margin="0,0,0,3" Content="Backup en .Fob" IsChecked="{Binding ExportFob}"></CheckBox>
+                <CheckBox Margin="0,0,0,3" Content="Backup en .Txt" IsChecked="{Binding ExportTxt}"></CheckBox>                
+                <CheckBox Margin="0,0,0,3" Content="PAUSE antes de importar" IsChecked="{Binding PauseBeforeImport}"></CheckBox>                
+                <WrapPanel Margin="0,0,0,3">
+                    <Label Content="Ruta de backup"></Label>
+                    <Label MinWidth="100" Content="{Binding BackupPath}" Margin="0" Width="200" HorizontalContentAlignment="Left"/>
+                </WrapPanel>
+                <WrapPanel Margin="0,0,0,3">
+                    <Label Content="Ruta de trabajo"></Label>
+                    <Label MinWidth="100" Content="{Binding WorkingPath}" Margin="0" Width="200" HorizontalContentAlignment="Left"/>
+                </WrapPanel>                
+            </StackPanel>
+
+            <Button Content="Generar Comandos" 
+                    Name="btn_GenerateCommand"
+                        Grid.Row="6"
+                        Margin="5,0"  
+                        Height="25" 
+                        Width="150" 
+                        Command="{Binding GenerateCommandCommand, Mode=OneWay}"></Button>
+        </Grid>
+        
+        <!-- splitter -->
+        <GridSplitter 
+            Grid.Column="1" 
+            Width="Auto" 
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            Foreground="#FFFFF300">            
+        </GridSplitter>
+        
+        <!-- command preview list-->
+        <Grid Margin="0" Grid.Column="2" Width="Auto" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Script .BAT Export-Import" Margin="5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" FontSize="18" FontWeight="Bold" BorderBrush="Black" BorderThickness="0,0,0,2" />
+
+                <TextBlock 
+                    Grid.Row="1" Margin="5" IsEnabled="False"
+                    Text="{Binding ExportCommand}" 
+                    FontWeight="ExtraLight" 
+                    TextWrapping="WrapWithOverflow" 
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"                    
+                    
+                    HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            
+                <!--<ItemsControl Grid.Row="1" Margin="5" ItemsSource="{Binding GeneratedCommands, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding }" Margin="0" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>-->
+      
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Guardar BAT" 
+                        Grid.Column="0"
+                        Margin="5,0"  
+                        Height="25" 
+                        Width="150" 
+                        Command="{Binding SaveBATCommand, Mode=OneWay}"></Button>
+                
+                <Button Content="Ejecutar comandos" 
+                    Grid.Column="1"
+                    Margin="5,0" 
+                    Height="25" 
+                    Width="120"  
+                    HorizontalAlignment="Right"
+                    Command="{Binding ExecuteCommandCommand, Mode=OneWay}"></Button>
+            </Grid>
+        </Grid>
+        
+        
+    </Grid>
+</Window>
