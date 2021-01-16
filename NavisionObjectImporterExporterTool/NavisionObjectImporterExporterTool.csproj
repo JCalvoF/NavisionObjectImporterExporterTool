@@ -147,9 +147,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Include="Connections.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AdditionalFiles>

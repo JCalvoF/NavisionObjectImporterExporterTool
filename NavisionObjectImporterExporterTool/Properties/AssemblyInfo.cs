@@ -8,11 +8,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NavisionObjectImporterExporterTool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Exportador e importador de objetos C/AL Navision")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("JCalvoF")]
 [assembly: AssemblyProduct("NavisionObjectImporterExporterTool")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
+[assembly: AssemblyCopyright("Copyright © JCalvoF 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

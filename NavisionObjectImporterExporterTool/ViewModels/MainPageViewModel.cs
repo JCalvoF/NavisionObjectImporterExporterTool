@@ -481,21 +481,27 @@ namespace NavisionObjectImporterExporterTool
             if ((ObjectID == null) || (ObjectID.Trim() == string.Empty))
                 return;
 
-            GeneratedCommands = _CommandService.GenerateCommands(
-                SelectedConnection,
-                SelectedObjectTypeList,
-                ObjectID,
-                destconnections,
-                BackupPath,
-                WorkingPath,
-                this.UseTimestamp,
-                DestinationBackup,
-                ExportFob,
-                ExportTxt,
-                PauseBeforeImport
-                );
-
-            
+            try
+            {
+                GeneratedCommands = _CommandService.GenerateCommands(
+                    SelectedConnection,
+                    SelectedObjectTypeList,
+                    ObjectID,
+                    destconnections,
+                    BackupPath,
+                    WorkingPath,
+                    this.UseTimestamp,
+                    DestinationBackup,
+                    ExportFob,
+                    ExportTxt,
+                    PauseBeforeImport
+                    );
+            }
+            catch (Exception ex)
+            {
+                NotifyError("Error al generar los comandos para exportacion", ex);
+            }            
+     
         }
 
         public void ExecuteCommand()
@@ -517,8 +523,9 @@ namespace NavisionObjectImporterExporterTool
             if ((GeneratedCommands == null) || (GeneratedCommands.Count == 0))
                 return;
 
-
-            _Scriptservice.Save2File(
+            try
+            {
+                _Scriptservice.Save2File(
                 WorkingPath,
                 SelectedObjectTypeList.ObjectTypeName,
                 ObjectID,
@@ -526,6 +533,11 @@ namespace NavisionObjectImporterExporterTool
                 true,
                 execute
                 );
+            }
+            catch (Exception ex)
+            {
+                NotifyError("Error al salvar el fichero", ex);
+             }
         }
 
         // TODO: Add methods that will be called by the view
